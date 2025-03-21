@@ -31,6 +31,27 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Set up tabs
+        val tabHost = binding.tabhost
+        tabHost.setup()
+
+        val tab1 = tabHost.newTabSpec("Featured")
+        tab1.setIndicator(getString(R.string.tab_Featured))
+        tab1.setContent(R.id.featured)
+        tabHost.addTab(tab1)
+
+        val tab2 = tabHost.newTabSpec("Scheduled")
+        tab2.setIndicator(getString(R.string.tab_Scheduled))
+        tab2.setContent(R.id.scheduled)
+        tabHost.addTab(tab2)
+
+        val tab3 = tabHost.newTabSpec("Past")
+        tab3.setIndicator(getString(R.string.tab_Past))
+        tab3.setContent(R.id.past)
+        tabHost.addTab(tab3)
+
+
+
     }
 
     override fun onDestroyView() {

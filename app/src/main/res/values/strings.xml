@@ -6,5 +6,8 @@
     <string name="first_fragment_label">First Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="tab_Featured">Featured</string>
+    <string name="tab_Scheduled">Scheduled</string>
+    <string name="tab_Past">Past</string>
 
 </resources>
