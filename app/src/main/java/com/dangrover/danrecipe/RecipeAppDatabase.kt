@@ -1,13 +1,12 @@
 package com.dangrover.danrecipe
 import android.content.Context
-import androidx.room.Database
 import androidx.room.*
 
 @Database(entities = [Recipe::class], version = 1)
 abstract class RecipeAppDatabase : RoomDatabase() {
 
     // DAOs
-    abstract fun recipeDao(): Recipe
+    abstract fun recipeDao(): RecipeDao
 
     companion object {
         @Volatile
@@ -19,7 +18,7 @@ abstract class RecipeAppDatabase : RoomDatabase() {
                     context.applicationContext,
                     RecipeAppDatabase::class.java,
                     "recipes-database.db" // The name of your database file (will be created in the app's data directory)
-                )
+                ).allowMainThreadQueries()
                     .createFromAsset("default-recipes-database.db") // The name of the file in assets/
                     .build()
                 DB_INSTANCE = instance
