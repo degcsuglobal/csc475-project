@@ -6,9 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dangrover.danrecipe.databinding.FragmentHomeBinding
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -57,16 +60,18 @@ class HomeFragment : Fragment() {
         // Featured recycler view
         val featuredRecycler : RecyclerView = binding.featuredRecycler
 
-        // set it up
-        featuredRecycler.layoutManager = LinearLayoutManager(requireContext())
-        featuredRecycler.adapter = FeaturedRecipesAdapter()
+
 
         // Get DB
         val db = RecipeAppDatabase.getDatabase(requireContext())
         val recipeDao = db.recipeDao()
 
         // load 10 random recipes
-        val recipes = recipeDao.getRandomRecipes(10)
+        val recipes = recipeDao.getRandomRecipes(30)
+
+        // set it up
+        featuredRecycler.layoutManager = LinearLayoutManager(requireContext())
+        featuredRecycler.adapter = FeaturedRecipesAdapter(recipes, this)
 
         // print it out in logcat
         Log.d("MainActivity", "Random Recipes: ${recipes.size}")
@@ -74,7 +79,6 @@ class HomeFragment : Fragment() {
             Log.d("MainActivity", "Recipe: ${recipe.title}")
         }
 
-        // Bind data to the view holder
 
     }
 
@@ -85,7 +89,8 @@ class HomeFragment : Fragment() {
 
 
 
-    class FeaturedRecipesAdapter : RecyclerView.Adapter<FeaturedRecipesAdapter.FeaturedRecipeViewHolder>() {
+    class FeaturedRecipesAdapter(private val recipes: List<Recipe>,
+                                 private val parentFragment: Fragment) : RecyclerView.Adapter<FeaturedRecipesAdapter.FeaturedRecipeViewHolder>() {
 
         class FeaturedRecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -98,12 +103,25 @@ class HomeFragment : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return 10
+            return recipes.size
         }
 
         override fun onBindViewHolder(holder: FeaturedRecipeViewHolder, position: Int) {
+            // set title
+            val titleTextView = holder.itemView.findViewById<TextView>(R.id.recipe_title)
+            titleTextView.text = recipes[position].title
 
-            // Bind data to the view holder
+            // make card view clickable
+            val cardView = holder.itemView.findViewById<CardView>(R.id.card)
+            cardView.setOnClickListener {
+                Log.d("MainActivity", "Recipe clicked: ${recipes[position].title}")
+                val recipeId = recipes[position].recipeId
+
+                findNavController(parentFragment).navigate(R.id.action_FirstFragment_to_recipeDetail, Bundle().apply {
+                    putInt("recipeId", recipeId)
+                })
+
+            }
 
         }
     }
