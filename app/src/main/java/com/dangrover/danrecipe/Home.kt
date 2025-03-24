@@ -37,6 +37,10 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Set title (This is not set in the nav_graph.xml
+        // to allow us to change it here)
+        activity?.title = getString(R.string.app_name_label)
+
         // Set up tabs
         val tabHost = binding.tabhost
         tabHost.setup()

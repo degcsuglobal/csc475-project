@@ -24,17 +24,22 @@ class RecipeDetail  : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Load the recipe
         val recipeId = arguments?.getInt("recipeId") ?: 0
         Log.d("RecipeDetail", "RecipeId: $recipeId")
-
-        // Get DB
-
         val db = RecipeAppDatabase.getDatabase(requireContext())
         val recipeDao = db.recipeDao()
-
         val thisRecipe = recipeDao.getRecipeById(recipeId)
 
+        // Set text
         binding.recipeText.text = this.formatRecipeForDisplay(thisRecipe)
+
+        // Set title by setting the label for this fragment
+        // because we are in a nav controller
+        activity?.title = thisRecipe.title
+
+        Log.d("RecipeDetail", "Activity: ${this.activity}")
+
     }
 
     private fun formatRecipeForDisplay(recipe: Recipe): String {
