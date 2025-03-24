@@ -60,8 +60,6 @@ class HomeFragment : Fragment() {
         // Featured recycler view
         val featuredRecycler : RecyclerView = binding.featuredRecycler
 
-
-
         // Get DB
         val db = RecipeAppDatabase.getDatabase(requireContext())
         val recipeDao = db.recipeDao()
