@@ -11,4 +11,8 @@ interface RecipeDao {
     // get recipe by id
     @Query("SELECT * FROM recipes WHERE id = :id")
     fun getRecipeById(id: Int): Recipe
+
+    // update recipe
+    @Update
+    fun updateRecipe(recipe: Recipe)
 }

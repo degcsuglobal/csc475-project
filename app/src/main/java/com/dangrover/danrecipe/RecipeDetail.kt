@@ -11,6 +11,7 @@ import com.dangrover.danrecipe.databinding.RecipeDetailBinding
 class RecipeDetail  : Fragment() {
     private var _binding: RecipeDetailBinding? = null
     private val binding get() = _binding!!
+    private var recipe : Recipe? = null;
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,19 +28,38 @@ class RecipeDetail  : Fragment() {
         // Load the recipe
         val recipeId = arguments?.getInt("recipeId") ?: 0
         Log.d("RecipeDetail", "RecipeId: $recipeId")
-        val db = RecipeAppDatabase.getDatabase(requireContext())
-        val recipeDao = db.recipeDao()
-        val thisRecipe = recipeDao.getRecipeById(recipeId)
+        this.recipe = RecipeAppDatabase.getDatabase(requireContext()).recipeDao().getRecipeById(recipeId)
 
         // Set text
-        binding.recipeText.text = this.formatRecipeForDisplay(thisRecipe)
+        binding.recipeText.text = this.formatRecipeForDisplay(this.recipe!!)
 
         // Set title by setting the label for this fragment
         // because we are in a nav controller
-        activity?.title = thisRecipe.title
+        activity?.title = this.recipe!!.title
+
+        // Bind action listeners for the favorite button and schedule buttons
+        binding.favoriteButton.setOnClickListener{
+            favoritePressed()
+        }
+
+        binding.scheduleButton.setOnClickListener {
+            Log.d("RecipeDetail", "Schedule button clicked")
+        }
 
         Log.d("RecipeDetail", "Activity: ${this.activity}")
+    }
 
+    private fun favoritePressed(){
+        Log.d("RecipeDetail", "Favorite button clicked")
+
+        // update button state, toggle favorite flag in database
+        val r = this.recipe!!
+        val isFavorite = r.isFavorite
+        r.isFavorite = !isFavorite
+        RecipeAppDatabase.getDatabase(requireContext()).recipeDao().updateRecipe(r)
+
+        // update button text
+        binding.favoriteButton.text = if (isFavorite) "Favorite" else "Unfavorite"
     }
 
     private fun formatRecipeForDisplay(recipe: Recipe): String {
