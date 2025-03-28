@@ -49,6 +49,18 @@
 
                     </LinearLayout>
 
+                     <LinearLayout
+                        android:id="@+id/favorites"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                         <androidx.recyclerview.widget.RecyclerView
+                             android:id="@+id/favoritesRecycler"
+                             android:layout_width="match_parent"
+                             android:layout_height="match_parent" />
+                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/scheduled"
                         android:layout_width="match_parent"
@@ -57,13 +69,8 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/past"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
+              
 
-                    </LinearLayout>
                 </FrameLayout>
             </LinearLayout>
         </TabHost>

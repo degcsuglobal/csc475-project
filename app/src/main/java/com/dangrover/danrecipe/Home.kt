@@ -50,14 +50,14 @@ class HomeFragment : Fragment() {
         tab1.setContent(R.id.featured)
         tabHost.addTab(tab1)
 
-        val tab2 = tabHost.newTabSpec("Scheduled")
-        tab2.setIndicator(getString(R.string.tab_Scheduled))
-        tab2.setContent(R.id.scheduled)
+        val tab2 = tabHost.newTabSpec("Favorites")
+        tab2.setIndicator(getString(R.string.tab_Favorites))
+        tab2.setContent(R.id.favorites)
         tabHost.addTab(tab2)
 
-        val tab3 = tabHost.newTabSpec("Past")
-        tab3.setIndicator(getString(R.string.tab_Past))
-        tab3.setContent(R.id.past)
+        val tab3 = tabHost.newTabSpec("Scheduled")
+        tab3.setIndicator(getString(R.string.tab_Scheduled))
+        tab3.setContent(R.id.scheduled)
         tabHost.addTab(tab3)
 
 
@@ -71,15 +71,14 @@ class HomeFragment : Fragment() {
         // load 10 random recipes
         val recipes = recipeDao.getRandomRecipes(30)
 
-        // set it up
+        // Set Up Featured Tab
         featuredRecycler.layoutManager = LinearLayoutManager(requireContext())
         featuredRecycler.adapter = FeaturedRecipesAdapter(recipes, this)
 
-        // print it out in logcat
-        Log.d("MainActivity", "Random Recipes: ${recipes.size}")
-        for (recipe in recipes) {
-            Log.d("MainActivity", "Recipe: ${recipe.title}")
-        }
+        // Set Up Favorites Tab
+       // val favoritesRecycler : RecyclerView = binding.favoritesRecycler
+       // favoritesRecycler.layoutManager = LinearLayoutManager(requireContext())
+      //  favoritesRecycler.adapter = FeaturedRecipesAdapter(recipes, this)
 
 
     }
