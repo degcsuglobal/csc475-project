@@ -2,7 +2,9 @@ package com.dangrover.danrecipe
 import android.content.Context
 import androidx.room.*
 
-@Database(entities = [Recipe::class], version = 1)
+@Database(entities = [Recipe::class, RecipeScheduleOccurrence::class],
+    version = 1)
+@TypeConverters(DateTypeConverter::class)
 abstract class RecipeAppDatabase : RoomDatabase() {
 
     // DAOs

@@ -15,4 +15,10 @@ interface RecipeDao {
     // update recipe
     @Update
     fun updateRecipe(recipe: Recipe)
+
+    // schedule recipe for date
+    @Insert
+    fun scheduleRecipe(recipeScheduleOccurrence: RecipeScheduleOccurrence)
+
+
 }
